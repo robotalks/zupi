@@ -1,0 +1,25 @@
+---
+name: zpi1
+version: 0.1.0
+description: zpi1 control spec
+components:
+  rate:
+    type: vision.rate.bysize
+    connect:
+      objects: zpi1/head/cam0/vision
+  pan:
+    type: vision.tracker.camera.stepping
+    connect:
+      objects: zpi1/rate/objects
+      servo: zpi1/head/pan/pos
+    config:
+      axis: 'x'
+  tilt:
+    type: vision.tracker.camera.stepping
+    connect:
+      objects: zpi1/rate/objects
+      servo: zpi1/head/tilt/pos
+    config:
+      axis: 'y'
+      angle-min: -60
+      angle-max: 80

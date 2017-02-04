@@ -1,0 +1,10 @@
+[Unit]
+Description=zpi1-board
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/robotalk run -s mqtt://localhost:1883/zupi /opt/zupi/zpi1/share/board.yml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

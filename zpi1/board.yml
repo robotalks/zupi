@@ -1,0 +1,63 @@
+---
+name: zpi1
+version: 1.0.0
+description: zpi1 board spec
+components:
+  mcp:
+    type: gobot.adapter.firmata
+    config:
+      serialport: /dev/ttyAMA0
+  pi:
+    type: gobot.adapter.raspi
+
+  led0:
+    type: gobot.gpio.led
+    inject:
+      gpio: mcp
+    config:
+      pin: '13'
+  btn0:
+    type: gobot.gpio.button
+    inject:
+      gpio: mcp
+    config:
+      pin: '12'
+      reverse: true
+
+  motors:
+    components:
+      left:
+        type: gobot.gpio.motor
+        inject:
+          gpio: /mcp
+        config:
+          pin: '9'
+          dir-pin: '7'
+      right:
+        type: gobot.gpio.motor
+        inject:
+          gpio: /mcp
+        config:
+          pin: '10'
+          dir-pin: '8'
+
+  head:
+    components:
+      cam0:
+        type: v4l2.camera
+      pan:
+        type: gobot.i2c.servo.adafruit
+        inject:
+          i2c: /pi
+        config:
+          channel: 1
+          pulse-min: 133
+          pulse-max: 513
+      tilt:
+        type: gobot.i2c.servo.adafruit
+        inject:
+          i2c: /pi
+        config:
+          channel: 0
+          pulse-min: 133
+          pulse-max: 513
