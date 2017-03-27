@@ -1,2 +1,2 @@
-vision: ../../analytics/out/amd64/bin/vision --mq-url mqtt://zpi1:1883 --pub zupi/zpi1/head/cam0/vision --udp 232.232.232.232:2332 --show
+vision: ../../analytics/out/amd64/bin/vision --mq-url mqtt://zpi1:1883 --pub zupi/zpi1/head/cam0/vision --udp 232.232.232.232:2332 --show track
 ctrl: ../../robotalk/out/amd64/bin/robotalk run -s mqtt://zpi1:1883/zupi ctrl.yml
