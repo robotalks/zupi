@@ -10,51 +10,93 @@ components:
   led0:
     type: gobot.gpio.led
     inject:
-      gpio: mcp
+      gpio:
+        type: ref
+        id: mcp
     config:
       pin: '13'
-  btn0:
-    type: gobot.gpio.button
+
+  servos_en:
+    type: gobot.gpio.pin
+    after:
+      - arms
+      - head
     inject:
-      gpio: mcp
+      gpio:
+        type: ref
+        id: mcp
     config:
       pin: '14'
-      reverse: true
+      value: true
 
   motors:
     components:
       left:
         type: gobot.gpio.motor
         inject:
-          gpio: /mcp
+          gpio:
+            type: ref
+            id: /mcp
         config:
           pin: '10'
           dir-pin: '16'
       right:
         type: gobot.gpio.motor
         inject:
-          gpio: /mcp
+          gpio:
+            type: ref
+            id: /mcp
         config:
           pin: '9'
           dir-pin: '15'
+
+  arms:
+    components:
+      right:
+        type: gobot.i2c.servo.adafruit
+        inject:
+          i2c:
+            type: ref
+            id: /mcp
+        config:
+          channel: 4
+          frequency: 50
+          pulse-min: 125
+          pulse-max: 485
+      left:
+        type: gobot.i2c.servo.adafruit
+        inject:
+          i2c:
+            type: ref
+            id: /mcp
+        config:
+          channel: 5
+          frequency: 50
+          pulse-min: 180
+          pulse-max: 460
+          reverse: true
 
   head:
     components:
       pan:
         type: gobot.i2c.servo.adafruit
         inject:
-          i2c: /mcp
+          i2c:
+            type: ref
+            id: /mcp
         config:
-          channel: 5
+          channel: 6
           frequency: 50
           pulse-min: 125
           pulse-max: 485
       tilt:
         type: gobot.i2c.servo.adafruit
         inject:
-          i2c: /mcp
+          i2c:
+            type: ref
+            id: /mcp
         config:
-          channel: 4
+          channel: 7
           frequency: 50
           pulse-min: 180
           pulse-max: 460
