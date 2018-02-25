@@ -7,6 +7,15 @@ components:
     config:
       serialport: /dev/ttyS3
 
+  pwm:
+    type: gobot.drv.pca9685
+    inject:
+      i2c:
+        type: ref
+        id: /mcp
+    config:
+      frequency: 50
+    
   led0:
     type: gobot.gpio.led
     inject:
@@ -28,6 +37,7 @@ components:
     config:
       pin: '14'
       value: true
+      stop-value: false
 
   motors:
     components:
@@ -53,50 +63,49 @@ components:
   arms:
     components:
       right:
-        type: gobot.i2c.servo.adafruit
+        type: gobot.servo.pwm
         inject:
-          i2c:
+          pwm:
             type: ref
-            id: /mcp
+            id: /pwm
         config:
           channel: 4
-          frequency: 50
-          pulse-min: 125
-          pulse-max: 485
+          pulse-min: 160
+          pulse-max: 400
+          initial-pos: -0.8
       left:
-        type: gobot.i2c.servo.adafruit
+        type: gobot.servo.pwm
         inject:
-          i2c:
+          pwm:
             type: ref
-            id: /mcp
+            id: /pwm
         config:
           channel: 5
-          frequency: 50
-          pulse-min: 180
-          pulse-max: 460
+          pulse-min: 160
+          pulse-max: 408
+          initial-pos: -0.8
           reverse: true
 
   head:
     components:
       pan:
-        type: gobot.i2c.servo.adafruit
+        type: gobot.servo.pwm
         inject:
-          i2c:
+          pwm:
             type: ref
-            id: /mcp
+            id: /pwm
         config:
           channel: 6
-          frequency: 50
           pulse-min: 125
           pulse-max: 485
       tilt:
-        type: gobot.i2c.servo.adafruit
+        type: gobot.servo.pwm
         inject:
-          i2c:
+          pwm:
             type: ref
-            id: /mcp
+            id: /pwm
         config:
           channel: 7
-          frequency: 50
           pulse-min: 180
-          pulse-max: 460
+          pulse-max: 320
+          initial-pos: -1
