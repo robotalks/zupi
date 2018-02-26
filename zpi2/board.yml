@@ -25,6 +25,17 @@ components:
     config:
       pin: '13'
 
+  voltage:
+    type: gobot.analog
+    inject:
+      io:
+        type: ref
+        id: mcp
+    config:
+      pin: '5'
+      interval: 100
+      div: 10
+
   servos_en:
     type: gobot.gpio.pin
     after:
@@ -88,6 +99,8 @@ components:
 
   head:
     components:
+      cam:
+        type: v4l2.camera
       pan:
         type: gobot.servo.pwm
         inject:
