@@ -15,7 +15,7 @@ components:
         id: /mcp
     config:
       frequency: 50
-    
+
   led0:
     type: gobot.gpio.led
     inject:
@@ -35,6 +35,15 @@ components:
       pin: '5'
       interval: 100
       div: 10
+
+  buzzer:
+    type: gobot.gpio.buzzer
+    inject:
+      gpio:
+        type: ref
+        id: mcp
+    config:
+      pin: '6'
 
   servos_en:
     type: gobot.gpio.pin
@@ -70,6 +79,28 @@ components:
         config:
           pin: '9'
           dir-pin: '15'
+      encoders:
+        components:
+          left:
+            type: gobot.analog
+            inject:
+              io:
+                type: ref
+                id: /mcp
+            config:
+              pin: '12'
+              interval: 10
+              div: 8
+          right:
+            type: gobot.analog
+            inject:
+              io:
+                type: ref
+                id: /mcp
+            config:
+              pin: '9'
+              interval: 10
+              div: 8
 
   arms:
     components:
@@ -101,6 +132,7 @@ components:
     components:
       cam:
         type: v4l2.camera
+        config: {}
       pan:
         type: gobot.servo.pwm
         inject:
